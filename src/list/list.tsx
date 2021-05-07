@@ -29,6 +29,7 @@ const List: React.FC<Props<any>> = (props) => {
         itemsReordered,
         droppedUnchanged,
         itemsChanged,
+        itemRemoved,
     } = useListContext()
 
     useEffect(() => {
@@ -89,7 +90,7 @@ const List: React.FC<Props<any>> = (props) => {
             let newItems = cloneDeep(items)
             newItems.splice(index, 1)
 
-            itemsChanged(newItems)
+            itemRemoved(index, newItems)
 
             if (props.onRemove) {
                 props.onRemove({

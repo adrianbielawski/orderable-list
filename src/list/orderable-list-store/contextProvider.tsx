@@ -22,6 +22,14 @@ export const ListContextProvider = (props: Props<any>) => {
         })
     }
 
+    const changeItemDimensions = (index: number, dimensions: T.ItemDimensions) => {
+        dispatch({
+            type: T.CHANGE_ITEM_DIMENSIONS,
+            index,
+            dimensions,
+        })
+    }
+
     const elementGrabbed = (grabbedElement: T.GrabbedElement) => {
         dispatch({
             type: T.ELEMENT_GRABBED,
@@ -72,9 +80,18 @@ export const ListContextProvider = (props: Props<any>) => {
         })
     }
 
+    const itemRemoved = (index: number, items: any[]) => {
+        dispatch({
+            type: T.ITEM_REMOVED,
+            index,
+            items,
+        })
+    }
+
     const context = {
         ...state,
         deviceInspected,
+        changeItemDimensions,
         elementGrabbed,
         enableTransition,
         elementMoved,
@@ -82,6 +99,7 @@ export const ListContextProvider = (props: Props<any>) => {
         itemsReordered,
         droppedUnchanged,
         itemsChanged,
+        itemRemoved,
     }
 
     return (

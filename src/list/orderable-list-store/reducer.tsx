@@ -5,6 +5,7 @@ import * as T from './storeTypes'
 export const initialState = {
     isTouchDevice: null,
     items: [],
+    itemsDimensions: {},
     grabbedElement: null,
     distance: null,
     scrollStep: null,
@@ -13,6 +14,7 @@ export const initialState = {
     scrollTopAt: 30,
     scrollBottomAt: 30,
     deviceInspected: () => { },
+    changeItemDimensions: () => { },
     elementGrabbed: () => { },
     enableTransition: () => { },
     elementMoved: () => { },
@@ -20,6 +22,7 @@ export const initialState = {
     itemsReordered: () => { },
     droppedUnchanged: () => { },
     itemsChanged: () => { },
+    itemRemoved: () => { },
 }
 
 export const ListContext = createContext<T.InitialState<any>>({ ...initialState })
@@ -30,6 +33,9 @@ export const reducer = (state: Draft<T.InitialState<any>>, action: T.Action) => 
     switch (action.type) {
         case T.DEVICE_INSPECTED:
             state.isTouchDevice = action.isTouchDevice
+            break
+        case T.CHANGE_ITEM_DIMENSIONS:
+            state.itemsDimensions[action.index] = action.dimensions
             break
         case T.ELEMENT_GRABBED:
             state.grabbedElement = action.grabbedElement
@@ -51,6 +57,7 @@ export const reducer = (state: Draft<T.InitialState<any>>, action: T.Action) => 
             Object.assign(state, {
                 ...initialState,
                     items: state.items,
+                    itemsDimensions: state.itemsDimensions,
                     isTouchDevice: state.isTouchDevice,
                     scrollTopAt: state.scrollTopAt,
                     scrollBottomAt: state.scrollBottomAt,
@@ -60,6 +67,7 @@ export const reducer = (state: Draft<T.InitialState<any>>, action: T.Action) => 
             Object.assign(state, {
                 ...initialState,
                     items: action.items,
+                    itemsDimensions: state.itemsDimensions,
                     isTouchDevice: state.isTouchDevice,
                     scrollTopAt: state.scrollTopAt,
                     scrollBottomAt: state.scrollBottomAt,
@@ -67,6 +75,10 @@ export const reducer = (state: Draft<T.InitialState<any>>, action: T.Action) => 
             break
         case T.ITEMS_CHANGED:
             state.items = action.items
+            break
+        case T.ITEM_REMOVED:
+            state.items = action.items
+            state.itemsDimensions = {}
             break
         default:
             throw new Error()

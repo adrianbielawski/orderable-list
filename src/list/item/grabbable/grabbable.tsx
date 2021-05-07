@@ -13,6 +13,7 @@ const Grabbable: React.ForwardRefRenderFunction<
     const {
         isTouchDevice,
         items,
+        itemsDimensions,
         grabbedElement,
         scrollStep,
         initialTopOffset,
@@ -71,6 +72,48 @@ const Grabbable: React.ForwardRefRenderFunction<
         [itemContext, grabbedElement, elementGrabbed]
     )
 
+    const getDistance = (top: number) => {
+        let moveDistance = (
+            top + window.pageYOffset - initialTopOffset! - grabbedElement!.startCoords.top
+        )
+
+        let distance = 0
+
+        if (moveDistance > 0) {
+            let totalHeight = 0
+            for (let i = itemContext.index! + 1; i < items.length; i++) {
+                const height = itemsDimensions[i].height
+                if (moveDistance - totalHeight >= height) {
+                    distance += 1
+                    totalHeight += height
+                } else {
+                    if(moveDistance - totalHeight >= height / 2) {
+                        distance += 1
+                    }
+                    break
+                }
+            }
+        }
+
+        if (moveDistance < 0) {
+            let totalHeight = 0
+            for (let i = itemContext.index! - 1; i >= 0; i--) {
+                const height = itemsDimensions[i].height
+                if (moveDistance - totalHeight <= -height) {
+                    distance -= 1
+                    totalHeight -= height
+                } else {
+                    if(moveDistance - totalHeight <= -(height / 2)) {
+                        distance -= 1
+                    }
+                    break
+                }
+            }
+        }
+
+        return distance
+    }
+
     const move = useCallback(
         (e: TouchEvent | MouseEvent) => {
             e.stopPropagation()
@@ -99,15 +142,8 @@ const Grabbable: React.ForwardRefRenderFunction<
 
             const top = y - grabbedElement.startGrabCoords.y + grabbedElement.startCoords.top
             const left = x - grabbedElement.startGrabCoords.x + grabbedElement.startCoords.left
-
-            let distance = (
-                top + window.pageYOffset - initialTopOffset! - grabbedElement.startCoords.top
-            ) / grabbedElement.height!
-
-            distance = Math.round(distance)
-            if (distance === -0) {
-                distance = 0
-            }
+            
+            const distance = getDistance(top)
 
             elementMoved({ top, left }, distance, scrollStep)
         },

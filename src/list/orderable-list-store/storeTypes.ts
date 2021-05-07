@@ -1,4 +1,5 @@
 export const DEVICE_INSPECTED = 'DEVICE_INSPECTED'
+export const CHANGE_ITEM_DIMENSIONS = 'CHANGE_ITEM_DIMENSIONS'
 export const ELEMENT_GRABBED = 'ELEMENT_GRABBED'
 export const ENABLE_TRANSITION = 'ENABLE_TRANSITION'
 export const ELEMENT_MOVED = 'ELEMENT_MOVED'
@@ -6,10 +7,17 @@ export const MOUSE_LEFT = 'MOUSE_LEFT'
 export const ITEMS_REORDERED = 'ITEMS_REORDERED'
 export const DROPPED_UNCHANGED = 'DROPPED_UNCHANGED'
 export const ITEMS_CHANGED = 'ITEMS_CHANGED'
+export const ITEM_REMOVED = 'ITEM_REMOVED'
 
 export interface DeviceInspected {
     type: typeof DEVICE_INSPECTED;
     isTouchDevice: boolean;
+}
+
+export interface ChangeItemDimensions {
+    type: typeof CHANGE_ITEM_DIMENSIONS;
+    index: number;
+    dimensions: ItemDimensions;
 }
 
 export interface ElementGrabbed {
@@ -46,7 +54,14 @@ export interface ItemsChanged<T> {
     items: T[];
 }
 
+export interface ItemRemoved<T> {
+    type: typeof ITEM_REMOVED;
+    index: number,
+    items: T[];
+}
+
 export type Action = DeviceInspected
+    | ChangeItemDimensions
     | ElementGrabbed
     | EnableTransition
     | ElementMoved
@@ -54,6 +69,11 @@ export type Action = DeviceInspected
     | ItemsReordered<any>
     | DroppedUnchanged
     | ItemsChanged<any>
+    | ItemRemoved<any>
+
+export interface ItemDimensions {
+    height: number;
+}
 
 export interface Coords {
     top: number;
@@ -77,6 +97,7 @@ export interface GrabbedElement {
 export type InitialState<T> = {
     isTouchDevice: boolean | null;
     items: T[];
+    itemsDimensions: Record<number, ItemDimensions>;
     grabbedElement: GrabbedElement | null;
     distance: number | null;
     scrollStep: number | null;
@@ -85,6 +106,7 @@ export type InitialState<T> = {
     scrollTopAt: number;
     scrollBottomAt: number;
     deviceInspected: (isTouchDevice: boolean) => void;
+    changeItemDimensions: (index: number, dimensions: ItemDimensions) => void;
     elementGrabbed: (grabbedElement: GrabbedElement) => void;
     enableTransition: () => void;
     elementMoved: (
@@ -96,4 +118,5 @@ export type InitialState<T> = {
     itemsReordered: (items: any[]) => void;
     droppedUnchanged: () => void;
     itemsChanged: (items: any[]) => void;
+    itemRemoved: (index: number, items: any[]) => void;
 }

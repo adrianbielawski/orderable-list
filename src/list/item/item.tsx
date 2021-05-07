@@ -31,9 +31,9 @@ type DynamicStyles = {
 }
 
 const Item: React.FC<Props<any>> = (props) => {
-    const { grabbedElement } = useListContext()
+    const { grabbedElement, changeItemDimensions } = useListContext()
     const timeout = useRef<ReturnType<typeof setTimeout> | null>(null)
-    const element = useRef(null)
+    const element = useRef<HTMLLIElement>(null)
     const [itemRemoved, setItemRemoved] = useState(false)
     const [height, setHeight] = useState<'auto' | 0>('auto')
 
@@ -58,6 +58,13 @@ const Item: React.FC<Props<any>> = (props) => {
             }
         }
     }, [])
+
+    useEffect(() => {
+        if (element.current !== null) {
+            const dimensions = element.current.getBoundingClientRect()
+            changeItemDimensions(props.index, { height: dimensions.height })
+        }
+    }, [props.index, props.item, grabbedElement])
 
     const getDynamicStyles = () => {
         if (!grabbedElement) {
