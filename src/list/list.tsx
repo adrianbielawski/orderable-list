@@ -1,3 +1,4 @@
+import React, { ElementType, useEffect, useCallback, ReactNode } from 'react'
 import classNames from 'classnames/bind'
 import styles from './list.scss'
 import { cloneDeep } from 'lodash'
@@ -17,6 +18,7 @@ type Props<T> = {
     className?: string;
     itemClassName?: string;
     animationDirection?: T.AnimationDirection;
+    noItemsMessage?: ReactNode;
     onDrop: (params: T.OnDropParams<T>) => void;
     onRemove?: (params: T.OnRemoveParams<T>) => void;
 }
@@ -155,6 +157,10 @@ const List: React.FC<Props<any>> = (props) => {
                 </Item>
             )
         })
+
+        if (listItems.length === 0) {
+            return props.noItemsMessage || <p className={styles.noItems}>No items</p>
+        }
 
         if (grabbedElement) {
             listItems.push(

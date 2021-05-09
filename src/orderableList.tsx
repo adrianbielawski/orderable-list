@@ -1,4 +1,4 @@
-import React, { ElementType } from 'react'
+import React, { ElementType, ReactNode } from 'react'
 //Types
 import * as T from 'src/types'
 //Utils
@@ -19,6 +19,7 @@ type Props<T> = {
     animationDirection?: T.AnimationDirection;
     scrollTopAt?: number;
     scrollBottomAt?: number;
+    noItemsMessage?: ReactNode;
     onDrop: (params: T.OnDropParams<T>) => void;
     onRemove?: (params: T.OnRemoveParams<T>) => void;
 }
