@@ -1,4 +1,5 @@
-import React, { ElementType, useEffect, useCallback } from 'react'
+import classNames from 'classnames/bind'
+import styles from './list.scss'
 import { cloneDeep } from 'lodash'
 //Types
 import * as T from 'src/types'
@@ -7,6 +8,8 @@ import { useListContext } from './orderable-list-store/reducer'
 //Components
 import Item from 'list/item/item'
 import Placeholder from 'list/placeholder/placeholder'
+
+const cx = classNames.bind(styles)
 
 type Props<T> = {
     items: T[];
@@ -165,8 +168,13 @@ const List: React.FC<Props<any>> = (props) => {
         return listItems
     }
 
+    const listClass = cx(
+        'orderableList',
+        props.className,
+    )
+
     return (
-        <ul className={props.className}>
+        <ul className={listClass}>
             {getListItems()}
         </ul>
     )
