@@ -20,7 +20,7 @@ type Props<T> = {
     scrollTopAt?: number;
     scrollBottomAt?: number;
     noItemsMessage?: ReactNode;
-    onDrop: (params: T.OnDropParams<T>) => void;
+    onDrop?: (params: T.OnDropParams<T>) => void;
     onRemove?: (params: T.OnRemoveParams<T>) => void;
 }
 

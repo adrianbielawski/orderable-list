@@ -19,7 +19,7 @@ type Props<T> = {
     itemClassName?: string;
     animationDirection?: T.AnimationDirection;
     noItemsMessage?: ReactNode;
-    onDrop: (params: T.OnDropParams<T>) => void;
+    onDrop?: (params: T.OnDropParams<T>) => void;
     onRemove?: (params: T.OnRemoveParams<T>) => void;
 }
 
@@ -81,11 +81,13 @@ const List: React.FC<Props<any>> = (props) => {
 
             itemsReordered(newItems)
 
-            props.onDrop({
-                item: items[prevPosition],
-                newPosition,
-                newItems: newItems,
-            })
+            if (props.onDrop) {
+                props.onDrop({
+                    item: items[prevPosition],
+                    newPosition,
+                    newItems: newItems,
+                })
+            }
         },
         [items, props.onDrop, droppedUnchanged, itemsReordered]
     )
