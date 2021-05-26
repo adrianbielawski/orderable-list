@@ -7,6 +7,7 @@ export type ItemComponentProps<T> = {
 }
 
 export type OnDropParams<T> = {
+    prevPosition: number,
     newPosition: number,
     item: T,
     newItems: T[]

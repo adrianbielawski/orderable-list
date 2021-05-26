@@ -84,6 +84,7 @@ const List: React.FC<Props<any>> = (props) => {
             if (props.onDrop) {
                 props.onDrop({
                     item: items[prevPosition],
+                    prevPosition,
                     newPosition,
                     newItems: newItems,
                 })
