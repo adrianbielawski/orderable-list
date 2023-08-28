@@ -1,6 +1,6 @@
 {
   "name": "@adrianbielawski/orderable-list",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "",
   "type": "module",
   "main": "./dist/orderable-list.mjs",
