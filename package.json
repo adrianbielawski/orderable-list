@@ -36,6 +36,13 @@
     "vite-plugin-css-injected-by-js": "^3.3.0",
     "vite-plugin-dts": "^3.5.2"
   },
+  "dependencies": {
+    "classnames": ">=2.3.1",
+    "immer": ">=8.0.0",
+    "lodash": ">=4.0.0",
+    "react-animate-height": ">=2.0.23",
+    "use-immer": ">=0.9.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adrianbielawski/orderable-list.git"
@@ -45,11 +52,6 @@
   },
   "homepage": "https://github.com/adrianbielawski/orderable-list#readme",
   "peerDependencies": {
-    "classnames": ">=2.3.1",
-    "immer": ">=8.0.0",
-    "lodash": ">=4.0.0",
-    "react": ">=17",
-    "react-animate-height": ">=2.0.23",
-    "use-immer": ">=0.9.0"
+    "react": ">=17"
   }
 }
