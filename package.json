@@ -52,7 +52,6 @@
   },
   "homepage": "https://github.com/adrianbielawski/orderable-list#readme",
   "peerDependencies": {
-    "react": ">=17",
-    "typescript": ">=4.9"
+    "react": ">=17"
   }
 }
