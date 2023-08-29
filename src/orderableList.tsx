@@ -12,7 +12,7 @@ import {
   OnRemoveParams,
 } from "./types";
 
-type Props<T> = {
+export type OrderableListProps<T> = {
   items: T[];
   itemComponent: ElementType<ItemComponentProps<T>>;
   className?: string;
@@ -25,7 +25,7 @@ type Props<T> = {
   onRemove?: (params: OnRemoveParams<T>) => void;
 };
 
-type OrderableListInterface = FC<Props<any>> & {
+type OrderableListInterface = FC<OrderableListProps<any>> & {
   RemoveButton: typeof RemoveButton;
   Grabbable: typeof Grabbable;
 };
